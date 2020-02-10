@@ -457,7 +457,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         // strip off first part containing e.g. [$-F800] or [$USD-409]
         // general syntax: [$<Currency string>-<language info>]
         // language info is in hexadecimal
-        $format = preg_replace('/^(\[\$[A-Z]*-[0-9A-F]*\])/i', '', $format);
+        $format = preg_replace('/^(\[\$[A-Z]*-[0-9A-F]*])/i', '', $format);
 
         // OpenOffice.org uses upper-case number formats, e.g. 'YYYY', convert to lower-case;
         //    but we don't want to change any quoted strings
@@ -642,7 +642,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         // Let's begin inspecting the format and converting the value to a formatted string
 
         //  Check for date/time characters (not inside quotes)
-        if (preg_match('/(\[\$[A-Z]*-[0-9A-F]*\])*[hmsdy](?=(?:[^"]|"[^"]*")*$)/miu', $format, $matches)) {
+        if (preg_match('/(\[\$[A-Z]*-[0-9A-F]*])*[hmsdy](?=(?:[^"]|"[^"]*")*$)/miu', $format, $matches)) {
             // datetime format
             self::formatAsDate($value, $format);
         } elseif (preg_match('/%$/', $format)) {
@@ -690,7 +690,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                     $value = $value / $scale;
 
                     // Strip #
-                    $format = preg_replace('/\\#/', '0', $format);
+                    $format = preg_replace('/#/', '0', $format);
 
                     $n = "/\[[^\]]+\]/";
                     $m = preg_replace($n, '', $format);
@@ -714,7 +714,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                             if (preg_match('/[0#]E[+-]0/i', $format)) {
                                 //    Scientific format
                                 $value = sprintf('%5.2E', $value);
-                            } elseif (preg_match('/0([^\d\.]+)0/', $format)) {
+                            } elseif (preg_match('/0([^\d.]+)0/', $format)) {
                                 $value = self::complexNumberFormatMask($value, $format);
                             } else {
                                 $sprintf_pattern = "%0$minWidth." . strlen($right) . "f";
@@ -724,7 +724,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                         }
                     }
                 }
-                if (preg_match('/\[\$(.*)\]/u', $format, $m)) {
+                if (preg_match('/\[\$(.*)]/u', $format, $m)) {
                     //  Currency or Accounting
                     $currencyFormat = $m[0];
                     $currencyCode = $m[1];
@@ -732,7 +732,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                     if ($currencyCode == '') {
                         $currencyCode = PHPExcel_Shared_String::getCurrencyCode();
                     }
-                    $value = preg_replace('/\[\$([^\]]*)\]/u', $currencyCode, $value);
+                    $value = preg_replace('/\[\$([^]]*)]/u', $currencyCode, $value);
                 }
             }
         }

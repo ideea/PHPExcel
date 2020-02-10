@@ -330,7 +330,7 @@ class PHPExcel_Shared_Date
             return false;
         }
         // Try checking for any of the date formatting characters that don't appear within square braces
-        if (preg_match('/(^|\])[^\[]*['.self::$possibleDateFormatCharacters.']/i', $pFormatCode)) {
+        if (preg_match('/(^|])[^\[]*['.self::$possibleDateFormatCharacters.']/i', $pFormatCode)) {
             //    We might also have a format mask containing quoted strings...
             //        we don't want to test for any of our characters within the quoted blocks
             if (strpos($pFormatCode, '"') !== false) {
@@ -338,7 +338,7 @@ class PHPExcel_Shared_Date
                 foreach (explode('"', $pFormatCode) as $subVal) {
                     //    Only test in alternate array entries (the non-quoted blocks)
                     if (($segMatcher = !$segMatcher) &&
-                        (preg_match('/(^|\])[^\[]*['.self::$possibleDateFormatCharacters.']/i', $subVal))) {
+                        (preg_match('/(^|])[^\[]*['.self::$possibleDateFormatCharacters.']/i', $subVal))) {
                         return true;
                     }
                 }
@@ -363,7 +363,7 @@ class PHPExcel_Shared_Date
         if (strlen($dateValue) < 2) {
             return false;
         }
-        if (!preg_match('/^(\d{1,4}[ \.\/\-][A-Z]{3,9}([ \.\/\-]\d{1,4})?|[A-Z]{3,9}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?|\d{1,4}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?)( \d{1,2}:\d{1,2}(:\d{1,2})?)?$/iu', $dateValue)) {
+        if (!preg_match('/^(\d{1,4}[ .\/\-][A-Z]{3,9}([ .\/\-]\d{1,4})?|[A-Z]{3,9}[ .\/\-]\d{1,4}([ .\/\-]\d{1,4})?|\d{1,4}[ .\/\-]\d{1,4}([ .\/\-]\d{1,4})?)( \d{1,2}:\d{1,2}(:\d{1,2})?)?$/iu', $dateValue)) {
             return false;
         }
 

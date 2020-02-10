@@ -1547,7 +1547,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                 foreach ($xmlWorkbook->definedNames->definedName as $definedName) {
                                     // Extract range
                                     $extractedRange = (string)$definedName;
-                                    $extractedRange = preg_replace('/\'(\w+)\'\!/', '', $extractedRange);
+                                    $extractedRange = preg_replace('/\'(\w+)\'!/', '', $extractedRange);
                                     if (($spos = strpos($extractedRange, '!')) !== false) {
                                         $extractedRange = substr($extractedRange, 0, $spos).str_replace('$', '', substr($extractedRange, $spos));
                                     } else {
@@ -1584,9 +1584,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                                     $range = str_replace('$', '', $range);
 
                                                     // check for repeating columns, e g. 'A:A' or 'A:D'
-                                                    if (preg_match('/!?([A-Z]+)\:([A-Z]+)$/', $range, $matches)) {
+                                                    if (preg_match('/!?([A-Z]+):([A-Z]+)$/', $range, $matches)) {
                                                         $docSheet->getPageSetup()->setColumnsToRepeatAtLeft(array($matches[1], $matches[2]));
-                                                    } elseif (preg_match('/!?(\d+)\:(\d+)$/', $range, $matches)) {
+                                                    } elseif (preg_match('/!?(\d+):(\d+)$/', $range, $matches)) {
                                                         // check for repeating rows, e.g. '1:1' or '1:5'
                                                         $docSheet->getPageSetup()->setRowsToRepeatAtTop(array($matches[1], $matches[2]));
                                                     }
@@ -1622,7 +1622,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                             foreach ($xmlWorkbook->definedNames->definedName as $definedName) {
                                 // Extract range
                                 $extractedRange = (string)$definedName;
-                                $extractedRange = preg_replace('/\'(\w+)\'\!/', '', $extractedRange);
+                                $extractedRange = preg_replace('/\'(\w+)\'!/', '', $extractedRange);
                                 if (($spos = strpos($extractedRange, '!')) !== false) {
                                     $extractedRange = substr($extractedRange, 0, $spos).str_replace('$', '', substr($extractedRange, $spos));
                                 } else {

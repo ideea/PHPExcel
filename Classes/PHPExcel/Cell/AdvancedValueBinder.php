@@ -96,7 +96,7 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
             }
 
             // Check for percentage
-            if (preg_match('/^\-?[0-9]*\.?[0-9]*\s?\%$/', $value)) {
+            if (preg_match('/^-?[0-9]*\.?[0-9]*\s?%$/', $value)) {
                 // Convert value to number
                 $value = (float) str_replace('%', '', $value) / 100;
                 $cell->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
@@ -120,7 +120,7 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
                         str_replace('$', $currencyCode, PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE)
                     );
                 return true;
-            } elseif (preg_match('/^\$ *(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/', $value)) {
+            } elseif (preg_match('/^\$ *(\d{1,3}(,\d{3})*|(\d+))(\.\d{2})?$/', $value)) {
                 // Convert value to number
                 $value = (float) trim(str_replace(array('$',','), '', $value));
                 $cell->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
